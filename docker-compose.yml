@@ -1,0 +1,10 @@
+services:
+  # Nginx high performance web server
+  nginx:
+    container_name: nginx
+    restart: unless-stopped
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - "./dist:/var/www"

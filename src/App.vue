@@ -1,26 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <div class="container">
+      <router-view/>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import EventBus from "./common/EventBus";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push({'name': 'login'});
+    }
+  },
+  mounted() {
+    EventBus.on("logout", () => {
+      this.logout();
+    });
+  },
+  beforeUnmount() {
+    EventBus.remove("logout");
   }
-}
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
